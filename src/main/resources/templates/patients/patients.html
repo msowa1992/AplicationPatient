@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <title>Pacjenci</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/main-menu}"></div>
+    <div class="p-3 m-0 border-0 bd-example m-0 border-0">
+      <h1>Lista Pacjentów: </h1>
+      <span>
+        <a href="/patient/add"               class="btn btn-outline-primary">Dodaj pacjenta</a>
+      </span>
+      <ul class="list-group">
+        <li th:each="patient :${patients}"
+        class="list-group-item d-flex justify-content-between align-items-center"
+        >
+          <span th:text="${patient.getFirstName()+' '+ patient.getLastName()}"></span>
+          <span>
+            <a th:href="${'/patient/id/'+ patient.getId()}"               class="btn btn-outline-primary">Pokaż więcej</a>
+            <a th:href="${'/patient/edit/'+ patient.getId()}"           class="btn btn-outline-success">Edytuj</a>
+            <a th:href="${'/patient/remove/'+ patient.getId()}"              class="btn btn-outline-danger">Usuń</a>
+          </span>
+        
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

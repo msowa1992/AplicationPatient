@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+  <title>Formularz pacjenta</title>
+</head>
+<body>
+<div th:replace="~{fragments/main-menu}"></div>
+
+<!-- Błędy formularza -->
+<div class="container mt-4">
+  <div th:if="${message != null}" class="alert alert-success" role="alert">
+    <span th:text="${message}"></span>
+  </div>
+  <div th:if="${errors != null}" class="alert alert-danger">
+    <ul>
+      <li th:each="error : ${errors}" th:text="${error}"></li>
+    </ul>
+  </div>
+</div>
+
+<div class="container">
+  <form th:action="${patient != null && patient.getId() != null ? '/patient/update/' + patient.getId() : '/patient/save'}" method="post" class="p-3 border">
+    <div class="row">
+      <div class="col-md-6">
+        <input class="form-control" name="firstName" placeholder="Imię" th:value="${patient != null ? patient.getFirstName() : ''}" />
+      </div>
+      <div class="col-md-6">
+        <input class="form-control" name="lastName" placeholder="Nazwisko" th:value="${patient != null ? patient.getLastName() : ''}" />
+      </div>
+    </div>
+
+    <div class="form-group mt-3">
+      <input class="form-control" type="email" name="email" placeholder="Email" th:value="${patient != null ? patient.getEmail() : ''}" />
+    </div>
+
+    <div class="form-group mt-3">
+      <input class="form-control" type="text" name="pesel" placeholder="PESEL" th:value="${patient != null ? patient.getPesel() : ''}" />
+    </div>
+
+    <div th:if="${patient != null && patient.getId() != null}" class="form-group mt-3">
+      <input type="text" name="role" th:value="${patientRole}" readonly class="form-control" />
+    </div>
+
+    <!-- Edycja adresu -->
+    <div th:if="${patient != null && patient.getAddress() != null}" class="mt-3">
+      <div th:each="address : ${patient.getAddress()}" class="row g-3">
+        <div class="col-md-4">
+          <input class="form-control" name="zipCode" placeholder="Kod pocztowy" th:value="${address.getZipCode()}" />
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" name="street" placeholder="Ulica" th:value="${address.getStreet()}" />
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" name="city" placeholder="Miasto" th:value="${address.getCity()}" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Dodawanie adresu -->
+    <div th:if="${patient == null}" class="mt-3">
+      <div class="row g-3">
+        <div class="col-md-4">
+          <input class="form-control" name="zipCode" placeholder="Kod pocztowy" />
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" name="street" placeholder="Ulica" />
+        </div>
+        <div class="col-md-4">
+          <input class="form-control" name="city" placeholder="Miasto" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Edycja telefonów -->
+    <div th:if="${patient != null && patient.getPhoneNumber() != null}" class="mt-3">
+      <div th:each="phone : ${patient.getPhoneNumber()}" class="row g-3">
+        <div class="col-md-6">
+          <input class="form-control" name="prefix" placeholder="Numer kierunkowy" th:value="${phone.getPrefix()}" />
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" name="phone" placeholder="Numer telefonu" th:value="${phone.getPhone()}" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Dodawanie telefonów -->
+    <div th:if="${patient == null}" class="mt-3">
+      <div class="row g-3">
+        <div class="col-md-6">
+          <input class="form-control" name="prefix" placeholder="Numer kierunkowy" />
+        </div>
+        <div class="col-md-6">
+          <input class="form-control" name="phone" placeholder="Numer telefonu" />
+        </div>
+      </div>
+    </div>
+
+    <!-- Historia medyczna -->
+    <div class="form-group mt-3">
+      <label for="medicalHistory">Historia medyczna</label>
+      <textarea id="medicalHistory" name="medicalHistory" class="form-control" rows="4" placeholder="Wpisz historię medyczną" th:text="${patient != null ? patient.getMedicalHistory() : ''}"></textarea>
+    </div>
+
+    <div class="form-group mt-3">
+      <button type="submit" class="btn btn-primary">Zapisz</button>
+    </div>
+  </form>
+</div>
+</body>
+</html>
