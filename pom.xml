@@ -84,22 +84,6 @@
     <artifactId>thymeleaf-extras-springsecurity6</artifactId>
     <version>3.1.2.RELEASE</version>
 </dependency>
-<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-mail</artifactId>
-    <version>3.2.4</version>
-</dependency>
-
-<!-- MOCKITO -->
-<!-- https://mvnrepository.com/artifact/org.mockito/mockito-core -->
-<dependency>
-    <groupId>org.mockito</groupId>
-    <artifactId>mockito-core</artifactId>
-    <version>5.11.0</version>
-    <scope>test</scope>
-</dependency>
-
 
 	</dependencies>
 
